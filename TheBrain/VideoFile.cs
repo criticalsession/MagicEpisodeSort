@@ -13,6 +13,7 @@ namespace TheBrain
         private string SXXRegex = "[sS][0-9]+";
         private string SXXEYYRegex = "[sS][0-9]+[eE][0-9]+-*[0-9]*";
         public string FullPath { get; set; }
+        public string NewDirectory { get; internal set; }
 
         public string FileName
         {
@@ -26,7 +27,7 @@ namespace TheBrain
             get
             {
                 string ext = Path.GetExtension(FullPath);
-                return ext.ToLower() == ".mp4" || ext.ToLower() == ".mkv";
+                return (ext.ToLower() == ".mp4" || ext.ToLower() == ".mkv") && this.Season != null;
             }
         }
 
@@ -50,7 +51,7 @@ namespace TheBrain
             }
         }
 
-        public int Season {
+        public int? Season {
             get
             {
                 // get SXXEYY first, then search for season inside it
@@ -67,18 +68,25 @@ namespace TheBrain
                     }
                 }
 
-                return 0;
+                return null;
             }
+        }
+
+        public void BuildNewDirectory(string root)
+        {
+            this.NewDirectory = Path.Combine(root, "MagicSorted", this.SeriesName, "Season " + this.Season.ToString().PadLeft(2, '0'));
         }
 
         public VideoFile()
         {
             FullPath = "";
+            NewDirectory = "";
         }
 
         public VideoFile(string fullPath)
         {
             FullPath = fullPath;
+            NewDirectory = "";
         }
     }
 }
