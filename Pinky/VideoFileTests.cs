@@ -42,10 +42,17 @@ namespace Pinky
             foreach (var tester in this.testFiles)
             {
                 VideoFile toTest = new VideoFile(tester.FullPath);
-                if (toTest.IsVideoFile)
-                {
-                    Assert.AreEqual(tester.SeriesName, toTest.SeriesName);
-                }
+                Assert.AreEqual(tester.SeriesName, toTest.SeriesName);
+            }
+        }
+
+        [Test]
+        public void getSeason_fromFullPath()
+        {
+            foreach (var tester in this.testFiles)
+            {
+                VideoFile toTest = new VideoFile(tester.FullPath);
+                Assert.AreEqual(tester.Season, toTest.Season);
             }
         }
 

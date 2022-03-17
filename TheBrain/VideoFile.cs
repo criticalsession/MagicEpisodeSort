@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace TheBrain
 {
     public class VideoFile
     {
+        private string SXXRegex = "[sS][0-9]+";
+        private string SXXEYYRegex = "[sS][0-9]+[eE][0-9]+-*[0-9]*";
         public string FullPath { get; set; }
-        public int Season { get; set; }
-        public string SeriesName 
-        { 
+
+        public string FileName
+        {
             get
             {
-                return "";
+                return Path.GetFileName(this.FullPath);
             }
         }
 
@@ -26,10 +30,50 @@ namespace TheBrain
             }
         }
 
+        public string SeriesName
+        {
+            get
+            {
+                if (this.IsVideoFile)
+                {
+                    var match = Regex.Match(this.FileName, SXXEYYRegex);
+                    if (match.Success)
+                    {
+                        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+
+                        string seriesName = this.FileName.Substring(0, match.Index).Replace(".", " ").Trim();
+                        return textInfo.ToTitleCase(seriesName);
+                    }
+                }
+
+                return String.Empty;
+            }
+        }
+
+        public int Season {
+            get
+            {
+                // get SXXEYY first, then search for season inside it
+                // to avoid weird cases where the title
+                // of the series contains SXX
+
+                if (this.IsVideoFile)
+                {
+                    var match = Regex.Match(this.FileName, SXXEYYRegex);
+                    if (match.Success)
+                    {
+                        var seasonMatch = Regex.Match(match.Value, SXXRegex);
+                        return int.Parse(seasonMatch.Value.ToLower().Replace("s", ""));
+                    }
+                }
+
+                return 0;
+            }
+        }
+
         public VideoFile()
         {
             FullPath = "";
-            Season = 0;
         }
 
         public VideoFile(string fullPath)
