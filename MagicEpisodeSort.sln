@@ -5,6 +5,10 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicEpisodeSort", "MagicEpisodeSort\MagicEpisodeSort.csproj", "{5FEA6BF4-18C6-4D65-AC3A-03E8B167F537}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBrain", "TheBrain\TheBrain.csproj", "{B5A281E8-389E-4BF0-B31C-63577DAE75E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinky", "Pinky\Pinky.csproj", "{AB391130-CFFF-465F-B4F0-4EF9A77CA122}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{5FEA6BF4-18C6-4D65-AC3A-03E8B167F537}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FEA6BF4-18C6-4D65-AC3A-03E8B167F537}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FEA6BF4-18C6-4D65-AC3A-03E8B167F537}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5A281E8-389E-4BF0-B31C-63577DAE75E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5A281E8-389E-4BF0-B31C-63577DAE75E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5A281E8-389E-4BF0-B31C-63577DAE75E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5A281E8-389E-4BF0-B31C-63577DAE75E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB391130-CFFF-465F-B4F0-4EF9A77CA122}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB391130-CFFF-465F-B4F0-4EF9A77CA122}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB391130-CFFF-465F-B4F0-4EF9A77CA122}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB391130-CFFF-465F-B4F0-4EF9A77CA122}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
