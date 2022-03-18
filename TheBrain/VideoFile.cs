@@ -80,7 +80,7 @@ namespace TheBrain
 
         public void BuildNewDirectory(string root)
         {
-            this.NewDirectory = Path.Combine(root, "MagicSorted", this.SeriesName, this.SeasonDirectoryName);
+            this.NewDirectory = Path.Combine(root, Manager.SortedDirName, this.SeriesName, this.SeasonDirectoryName);
         }
 
         public VideoFile()

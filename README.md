@@ -19,7 +19,7 @@ You just need delete what's left behind yourself.
 **MagicEpisodeSort** searches through all directories in its current directory and pulls all **mp4, mkv, avi, webm** files. 
 It then finds the season number (by matching the formats: **S00E00, S0E0, S00E0000, S00E00-00, S00E00-E00**) and the series name (assumes that the series name directly preceedes the season/episode number).
 
-Once that's done, the program creates directories for each series and season number in a folder named "MagicSorted". For example, 
+Once that's done, the program creates directories for each series and season number in a folder named "Magic-Sorted". For example, 
 `{root}/A.Third.Show.S12E0910.WEB.x264/A.Third.Show.S12E0910.episode-name.WEB.x264.mp4` goes into `{root}/A Third Show/Season 12/A.Third.Show.S12E0910.episode-name.WEB.x264.mp4`.
 
 ### To Do:

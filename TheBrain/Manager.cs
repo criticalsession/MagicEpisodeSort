@@ -8,6 +8,14 @@ namespace TheBrain
 {
     public static class Manager
     {
+        public static string SortedDirName // in case I want to add configs in the future
+        {
+            get
+            {
+                return "Magic-Sorted";
+            }
+        }
+
         public static void MagicSort(string root)
         {
             MoveFiles(root, BuildVideoFiles(root, ReadFiles(root)));
@@ -45,16 +53,16 @@ namespace TheBrain
 
         private static void CreateDirectories(string root, List<VideoFile> videoFiles)
         {
-            if (!Directory.Exists(Path.Combine(root, "MagicSorted"))) 
-                Directory.CreateDirectory(Path.Combine(root, "MagicSorted"));
+            if (!Directory.Exists(Path.Combine(root, Manager.SortedDirName))) 
+                Directory.CreateDirectory(Path.Combine(root, Manager.SortedDirName));
 
             foreach (var videoFile in videoFiles)
             {
-                if (!Directory.Exists(Path.Combine(root, "MagicSorted", videoFile.SeriesName)))
-                    Directory.CreateDirectory(Path.Combine(root, "MagicSorted", videoFile.SeriesName));
+                if (!Directory.Exists(Path.Combine(root, Manager.SortedDirName, videoFile.SeriesName)))
+                    Directory.CreateDirectory(Path.Combine(root, Manager.SortedDirName, videoFile.SeriesName));
 
-                if (!Directory.Exists(Path.Combine(root, "MagicSorted", videoFile.SeriesName, videoFile.SeasonDirectoryName)))
-                    Directory.CreateDirectory(Path.Combine(root, "MagicSorted", videoFile.SeriesName, videoFile.SeasonDirectoryName));
+                if (!Directory.Exists(Path.Combine(root, Manager.SortedDirName, videoFile.SeriesName, videoFile.SeasonDirectoryName)))
+                    Directory.CreateDirectory(Path.Combine(root, Manager.SortedDirName, videoFile.SeriesName, videoFile.SeasonDirectoryName));
             }
         }
 
