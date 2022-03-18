@@ -22,4 +22,8 @@ It then finds the season number (by matching the formats: **S00E00, S0E0, S00E00
 Once that's done, the program creates directories for each series and season number in a folder named "MagicSorted". For example, 
 `{root}/A.Third.Show.S12E0910.WEB.x264/A.Third.Show.S12E0910.episode-name.WEB.x264.mp4` goes into `{root}/A Third Show/Season 12/A.Third.Show.S12E0910.episode-name.WEB.x264.mp4`.
 
+### To Do:
+
+[] Match files with the season/episode format of AxBB
+
 ### Most importantly though, I do not condone illegal downloading of tv shows.

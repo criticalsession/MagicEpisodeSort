@@ -1,3 +1,7 @@
-﻿using TheBrain;
+﻿using System;
+using TheBrain;
 
-Manager.MagicSort(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
+Console.WriteLine("Reading: " + System.AppContext.BaseDirectory);
+Manager.MagicSort(System.AppContext.BaseDirectory);
+Console.WriteLine("Done");
+Console.ReadLine();
