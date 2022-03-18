@@ -10,6 +10,7 @@ namespace TheBrain
 {
     public class VideoFile
     {
+        private string[] extensions = new string[] { ".mp4", ".mkv", ".webm", "avi" };
         private string SXXRegex = "[sS][0-9]+";
         private string SXXEYYRegex = "[sS][0-9]+[eE][0-9]+-*[eE]*[0-9]*";
         public string FullPath { get; set; }
@@ -26,8 +27,8 @@ namespace TheBrain
         public bool IsVideoFile {
             get
             {
-                string ext = Path.GetExtension(FullPath);
-                return (ext.ToLower() == ".mp4" || ext.ToLower() == ".mkv") && this.Season != null;
+                string ext = Path.GetExtension(FullPath).ToLower();
+                return extensions.Contains(ext) && this.Season != null;
             }
         }
 

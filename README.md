@@ -16,7 +16,7 @@ You just need delete what's left behind yourself.
 
 ### How it Works
 
-**MagicEpisodeSort** searches through all directories in its current directory and pulls all **mp4** and **mkv** files. 
+**MagicEpisodeSort** searches through all directories in its current directory and pulls all **mp4, mkv, avi, webm** files. 
 It then finds the season number (by matching the formats: **S00E00, S0E0, S00E0000, S00E00-00, S00E00-E00**) and the series name (assumes that the series name directly preceedes the season/episode number).
 
 Once that's done, the program creates directories for each series and season number in a folder named "MagicSorted". For example, 
@@ -24,6 +24,6 @@ Once that's done, the program creates directories for each series and season num
 
 ### To Do:
 
-[ ] Match files with the season/episode format of AxBB
+- Match files with the season/episode format of AxBB
 
 ### Most importantly though, I do not condone illegal downloading of tv shows.
