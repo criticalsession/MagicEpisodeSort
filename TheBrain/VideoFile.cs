@@ -11,7 +11,7 @@ namespace TheBrain
     public class VideoFile
     {
         private string SXXRegex = "[sS][0-9]+";
-        private string SXXEYYRegex = "[sS][0-9]+[eE][0-9]+-*[0-9]*";
+        private string SXXEYYRegex = "[sS][0-9]+[eE][0-9]+-*[eE]*[0-9]*";
         public string FullPath { get; set; }
         public string NewDirectory { get; internal set; }
 
@@ -58,23 +58,28 @@ namespace TheBrain
                 // to avoid weird cases where the title
                 // of the series contains SXX
 
-                if (this.IsVideoFile)
+                var match = Regex.Match(this.FileName, SXXEYYRegex);
+                if (match.Success)
                 {
-                    var match = Regex.Match(this.FileName, SXXEYYRegex);
-                    if (match.Success)
-                    {
-                        var seasonMatch = Regex.Match(match.Value, SXXRegex);
-                        return int.Parse(seasonMatch.Value.ToLower().Replace("s", ""));
-                    }
+                    var seasonMatch = Regex.Match(match.Value, SXXRegex);
+                    return int.Parse(seasonMatch.Value.ToLower().Replace("s", ""));
                 }
 
                 return null;
             }
         }
 
+        public string SeasonDirectoryName
+        {
+            get
+            {
+                return "Season " + this.Season.GetValueOrDefault(0).ToString().PadLeft(2, '0');
+            }
+        }
+
         public void BuildNewDirectory(string root)
         {
-            this.NewDirectory = Path.Combine(root, "MagicSorted", this.SeriesName, "Season " + this.Season.ToString().PadLeft(2, '0'));
+            this.NewDirectory = Path.Combine(root, "MagicSorted", this.SeriesName, this.SeasonDirectoryName);
         }
 
         public VideoFile()
