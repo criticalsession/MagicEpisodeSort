@@ -25,5 +25,6 @@ Once that's done, the program creates directories for each series and season num
 ### To Do:
 
 - Match files with the season/episode format of AxBB
+- Configs for: forcing names of series, folder structure, etc.
 
 ### Most importantly though, I do not condone illegal downloading of tv shows.
