@@ -18,6 +18,7 @@ namespace TheBrain
 
         public static void MagicSort(string root)
         {
+            // todo: get config
             MoveFiles(root, BuildVideoFiles(root, ReadFiles(root)));
         }
 
@@ -58,12 +59,22 @@ namespace TheBrain
 
             foreach (var videoFile in videoFiles)
             {
-                if (!Directory.Exists(Path.Combine(root, Manager.SortedDirName, videoFile.SeriesName)))
-                    Directory.CreateDirectory(Path.Combine(root, Manager.SortedDirName, videoFile.SeriesName));
+                if (!Directory.Exists(GetSeriesDirectory(root, videoFile)))
+                    Directory.CreateDirectory(GetSeriesDirectory(root, videoFile));
 
-                if (!Directory.Exists(Path.Combine(root, Manager.SortedDirName, videoFile.SeriesName, videoFile.SeasonDirectoryName)))
-                    Directory.CreateDirectory(Path.Combine(root, Manager.SortedDirName, videoFile.SeriesName, videoFile.SeasonDirectoryName));
+                if (!Directory.Exists(GetSeriesSeasonDirectory(root, videoFile)))
+                    Directory.CreateDirectory(GetSeriesSeasonDirectory(root, videoFile));
             }
+        }
+
+        private static string GetSeriesSeasonDirectory(string root, VideoFile videoFile)
+        {
+            return Path.Combine(GetSeriesDirectory(root, videoFile), videoFile.SeasonDirectoryName);
+        }
+
+        private static string GetSeriesDirectory(string root, VideoFile videoFile)
+        {
+            return Path.Combine(root, Manager.SortedDirName, videoFile.GetSeriesName());
         }
 
         private static void MoveFiles(string root, List<VideoFile> videoFiles)

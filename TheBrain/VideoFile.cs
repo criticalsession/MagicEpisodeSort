@@ -10,7 +10,7 @@ namespace TheBrain
 {
     public class VideoFile
     {
-        private string[] extensions = new string[] { ".mp4", ".mkv", ".webm", "avi" };
+        private string[] extensions = new string[] { ".mp4", ".mkv", ".webm", ".avi" };
         private string SXXRegex = "[sS][0-9]+";
         private string SXXEYYRegex = "[sS][0-9]+[eE][0-9]+-*[eE]*[0-9]*";
         public string FullPath { get; set; }
@@ -32,24 +32,32 @@ namespace TheBrain
             }
         }
 
-        public string SeriesName
+        public string GetSeriesName()
         {
-            get
+            if (this.IsVideoFile)
             {
-                if (this.IsVideoFile)
+                var match = Regex.Match(this.FileName, SXXEYYRegex);
+                if (match.Success)
                 {
-                    var match = Regex.Match(this.FileName, SXXEYYRegex);
-                    if (match.Success)
-                    {
-                        TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                    TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
 
-                        string seriesName = this.FileName.Substring(0, match.Index).Replace(".", " ").Trim();
-                        return textInfo.ToTitleCase(seriesName);
-                    }
+                    string seriesName = this.FileName.Substring(0, match.Index).Replace(".", " ").Trim();
+                    return textInfo.ToTitleCase(seriesName.ToLower());
                 }
-
-                return String.Empty;
             }
+
+            return String.Empty;
+        }
+
+        public string GetSeriesName(List<string[]> customSeriesNames)
+        {
+            string originalSeriesName = this.GetSeriesName();
+            string[]? nameInConfig = customSeriesNames.FirstOrDefault(p => p[0] == originalSeriesName);
+
+            if (nameInConfig != null) 
+                return nameInConfig[1];
+
+            return originalSeriesName;
         }
 
         public int? Season {
@@ -80,7 +88,7 @@ namespace TheBrain
 
         public void BuildNewDirectory(string root)
         {
-            this.NewDirectory = Path.Combine(root, Manager.SortedDirName, this.SeriesName, this.SeasonDirectoryName);
+            this.NewDirectory = Path.Combine(root, Manager.SortedDirName, this.GetSeriesName(), this.SeasonDirectoryName);
         }
 
         public VideoFile()

@@ -42,8 +42,29 @@ namespace Pinky
             foreach (var tester in this.testFiles)
             {
                 VideoFile toTest = new VideoFile(tester.FullPath);
-                Assert.AreEqual(tester.SeriesName, toTest.SeriesName);
+                Assert.AreEqual(tester.SeriesName, toTest.GetSeriesName());
             }
+        }
+
+        [Test]
+        public void getCustomSeriesName_givenConfig_fromCurrentPath()
+        {
+            Config config = new Config();
+            config.CustomSeriesNames.Add(new string[] { "My First Series", "My 1st Series" });
+            config.CustomSeriesNames.Add(new string[] { "My Specialoneword Title", "My Special One-Word Title" });
+            config.CustomSeriesNames.Add(new string[] { "Critical Sessions Apostrophe", "Critical Session's Apostrophe" });
+
+            VideoFile toTest = new VideoFile(Path.Combine(root, "my.first.series.s01e01.mp4"));
+            Assert.AreEqual(toTest.GetSeriesName(config.CustomSeriesNames), "My 1st Series");
+
+            toTest = new VideoFile(Path.Combine(root, "my.second.series.s01e01.mp4"));
+            Assert.AreEqual(toTest.GetSeriesName(config.CustomSeriesNames), "My Second Series");
+
+            toTest = new VideoFile(Path.Combine(root, "series directory", "my.SPECIALONEWORD.title.s05e0506.mp4"));
+            Assert.AreEqual(toTest.GetSeriesName(config.CustomSeriesNames), "My Special One-Word Title");
+
+            toTest = new VideoFile(Path.Combine(root, "critical.sessions.apostrophe.s02e02.avi"));
+            Assert.AreEqual(toTest.GetSeriesName(config.CustomSeriesNames), "Critical Session's Apostrophe");
         }
 
         [Test]
