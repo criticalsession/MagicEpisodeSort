@@ -10,8 +10,8 @@ But let's say you really, really wanted to download all 50 episodes that came ou
 It then finds the season number (by matching the formats: **S00E00, S0E0, S00E0000, S00E00-00, S00E00-E00**) and the series name 
 (assumes that the series name directly preceedes the season/episode number).
 
-Once that's done, the program creates directories for each series and season number in a folder named "Magic-Sorted". For example, 
-`{root}/A.Third.Show.S12E0910.WEB.x264/A.Third.Show.S12E0910.episode-name.WEB.x264.mp4` goes into `{root}/A Third Show/Season 12/A.Third.Show.S12E0910.episode-name.WEB.x264.mp4`.
+Once that's done, the program creates directories for each series and season number in a folder named "Magic-Sorted" (default, can be changed in config). For example, 
+`{root}/A.Third.Show.S12E0910.WEB.x264/A.Third.Show.S12E0910.episode-name.WEB.x264.mp4` goes into `{root}/Magic-Sorted/A Third Show/Season 12/A.Third.Show.S12E0910.episode-name.WEB.x264.mp4`.
 
 ### Configuring the Output
 
