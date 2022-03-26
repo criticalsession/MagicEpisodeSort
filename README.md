@@ -32,6 +32,8 @@ This will set the directory name as "Sorted Episodes", and will change any episo
 This is especially useful for series with apostrophes in the name (they usually don't have apostrophes in the file name), and series with names containing special casing (a series with the name "CodingBestPractices 101"
 will be named "Codingbestpractices 101" by **MagicEpisodeSort**).
 
+Every time you run **MagicEpisodeSort** it also checks if this is the first time you're sorting this series and, if it is, it automatically adds an entry into the config for ease of update.
+
 ### Most importantly though, I do not condone illegal downloading of tv shows. Don't do it.
 
 ### To Do:
@@ -39,4 +41,4 @@ will be named "Codingbestpractices 101" by **MagicEpisodeSort**).
  - [ ] Match files with the season/episode format of AxBB
  - [X] Configs for: forcing names of series, folder structure, etc.
  - [ ] Add UI for managing configs
- - [ ] Config auto population of series names after every run, for ease of update
+ - [x] Config auto population of series names after every run, for ease of update

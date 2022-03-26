@@ -34,13 +34,18 @@ namespace TheBrain
             }
         }
 
-        public string GetSeriesName()
+        public string GetOriginalSeriesName()
+        {
+            return GetSeriesName(false);
+        }
+
+        public string GetSeriesName(bool applyCustom = true)
         {
             string seriesName = String.Empty;
             if (this.IsVideoFile)
             {
                 seriesName = this.GetSeriesNameFromFileName();
-                if (CustomSeriesNames != null && CustomSeriesNames.Count > 0)
+                if (applyCustom && CustomSeriesNames != null && CustomSeriesNames.Count > 0)
                     seriesName = this.ReplaceSeriesNameWithCustom(seriesName);
             }
 
