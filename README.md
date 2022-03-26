@@ -36,7 +36,7 @@ will be named "Codingbestpractices 101" by **MagicEpisodeSort**).
 
 ### To Do:
 
- - [] Match files with the season/episode format of AxBB
+ - [ ] Match files with the season/episode format of AxBB
  - [X] Configs for: forcing names of series, folder structure, etc.
- - [] Add UI for managing configs
- - [] Config auto population of series names after every run, for ease of update
+ - [ ] Add UI for managing configs
+ - [ ] Config auto population of series names after every run, for ease of update
