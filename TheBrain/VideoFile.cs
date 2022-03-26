@@ -16,6 +16,8 @@ namespace TheBrain
         public string FullPath { get; set; }
         public string NewDirectory { get; internal set; }
 
+        public List<string[]> CustomSeriesNames { get; set; }
+
         public string FileName
         {
             get
@@ -34,30 +36,40 @@ namespace TheBrain
 
         public string GetSeriesName()
         {
+            string seriesName = String.Empty;
             if (this.IsVideoFile)
             {
-                var match = Regex.Match(this.FileName, SXXEYYRegex);
-                if (match.Success)
-                {
-                    TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-
-                    string seriesName = this.FileName.Substring(0, match.Index).Replace(".", " ").Trim();
-                    return textInfo.ToTitleCase(seriesName.ToLower());
-                }
+                seriesName = this.GetSeriesNameFromFileName();
+                if (CustomSeriesNames != null && CustomSeriesNames.Count > 0)
+                    seriesName = this.ReplaceSeriesNameWithCustom(seriesName);
             }
 
-            return String.Empty;
+            return seriesName;
         }
 
-        public string GetSeriesName(List<string[]> customSeriesNames)
+        private string GetSeriesNameFromFileName()
         {
-            string originalSeriesName = this.GetSeriesName();
-            string[]? nameInConfig = customSeriesNames.FirstOrDefault(p => p[0] == originalSeriesName);
+            string seriesName = String.Empty;
+            var match = Regex.Match(this.FileName, SXXEYYRegex);
+            if (match.Success)
+            {
+                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+
+                seriesName = this.FileName.Substring(0, match.Index).Replace(".", " ").Trim();
+                seriesName = textInfo.ToTitleCase(seriesName.ToLower());
+            }
+
+            return seriesName;
+        }
+
+        private string ReplaceSeriesNameWithCustom(string seriesName)
+        {
+            string[]? nameInConfig = CustomSeriesNames.FirstOrDefault(p => p[0] == seriesName);
 
             if (nameInConfig != null) 
                 return nameInConfig[1];
 
-            return originalSeriesName;
+            return seriesName;
         }
 
         public int? Season {
@@ -88,19 +100,21 @@ namespace TheBrain
 
         public void BuildNewDirectory(string root)
         {
-            this.NewDirectory = Path.Combine(root, Manager.SortedDirName, this.GetSeriesName(), this.SeasonDirectoryName);
+            this.NewDirectory = Path.Combine(root, Manager.config.SortedDirectory, this.GetSeriesName(), this.SeasonDirectoryName);
         }
 
         public VideoFile()
         {
             FullPath = "";
             NewDirectory = "";
+            CustomSeriesNames = new List<string[]>();
         }
 
-        public VideoFile(string fullPath)
+        public VideoFile(string fullPath, List<string[]>? customSeriesNames = null)
         {
             FullPath = fullPath;
             NewDirectory = "";
+            CustomSeriesNames = customSeriesNames ?? new List<string[]>();
         }
     }
 }

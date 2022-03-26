@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,18 +9,24 @@ namespace TheBrain
 {
     public static class Manager
     {
-        public static string SortedDirName // in case I want to add configs in the future
-        {
-            get
-            {
-                return "Magic-Sorted";
-            }
-        }
+        public static Config config = new Config();
 
         public static void MagicSort(string root)
         {
-            // todo: get config
+            ReadConfig(root);
             MoveFiles(root, BuildVideoFiles(root, ReadFiles(root)));
+        }
+
+        private static void ReadConfig(string root)
+        {
+            string configPath = Path.Combine(root, "MagicEpisodeSort.config");
+
+            if (!File.Exists(configPath)) File.WriteAllText(configPath, JsonConvert.SerializeObject(config));
+            else
+            {
+                var deserializedConfig = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configPath));
+                if (deserializedConfig != null) config = deserializedConfig;
+            }
         }
 
         public static List<VideoFile> BuildVideoFiles(string root, List<string> filePaths)
@@ -27,7 +34,7 @@ namespace TheBrain
             List<VideoFile> videoFiles = new List<VideoFile>();
             foreach (string f in filePaths)
             {
-                VideoFile videoFile = new VideoFile(f);
+                VideoFile videoFile = new VideoFile(f, config.CustomSeriesNames);
                 if (videoFile.IsVideoFile)
                 {
                     videoFile.BuildNewDirectory(root);
@@ -54,8 +61,8 @@ namespace TheBrain
 
         private static void CreateDirectories(string root, List<VideoFile> videoFiles)
         {
-            if (!Directory.Exists(Path.Combine(root, Manager.SortedDirName))) 
-                Directory.CreateDirectory(Path.Combine(root, Manager.SortedDirName));
+            if (!Directory.Exists(Path.Combine(root, config.SortedDirectory))) 
+                Directory.CreateDirectory(Path.Combine(root, config.SortedDirectory));
 
             foreach (var videoFile in videoFiles)
             {
@@ -74,7 +81,7 @@ namespace TheBrain
 
         private static string GetSeriesDirectory(string root, VideoFile videoFile)
         {
-            return Path.Combine(root, Manager.SortedDirName, videoFile.GetSeriesName());
+            return Path.Combine(root, config.SortedDirectory, videoFile.GetSeriesName());
         }
 
         private static void MoveFiles(string root, List<VideoFile> videoFiles)

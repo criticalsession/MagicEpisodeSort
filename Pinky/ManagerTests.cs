@@ -28,9 +28,9 @@ namespace Pinky
         {
             var toTest = Manager.BuildVideoFiles(root, filePaths);
             Assert.IsTrue(toTest.Count == 7);
-            Assert.AreEqual(Path.Combine(toTest[0].NewDirectory, toTest[0].FileName), Path.Combine(root, Manager.SortedDirName, "A Sample Series", "Season 07", "A.Sample.Series.S07E06.mp4"));
-            Assert.AreEqual(Path.Combine(toTest[3].NewDirectory, toTest[3].FileName), Path.Combine(root, Manager.SortedDirName, "A Third Show", "Season 12", "A.Third.Show.S12E0910.episode-name.WEB.x264.mp4"));
-            Assert.AreEqual(Path.Combine(toTest[6].NewDirectory, toTest[6].FileName), Path.Combine(root, Manager.SortedDirName, "A Different Series", "Season 07", "A.Different.Series.s07e01.WEBRip.mkv"));
+            Assert.AreEqual(Path.Combine(toTest[0].NewDirectory, toTest[0].FileName), Path.Combine(root, Manager.config.SortedDirectory, "A Sample Series", "Season 07", "A.Sample.Series.S07E06.mp4"));
+            Assert.AreEqual(Path.Combine(toTest[3].NewDirectory, toTest[3].FileName), Path.Combine(root, Manager.config.SortedDirectory, "A Third Show", "Season 12", "A.Third.Show.S12E0910.episode-name.WEB.x264.mp4"));
+            Assert.AreEqual(Path.Combine(toTest[6].NewDirectory, toTest[6].FileName), Path.Combine(root, Manager.config.SortedDirectory, "A Different Series", "Season 07", "A.Different.Series.s07e01.WEBRip.mkv"));
         }
     }
 }

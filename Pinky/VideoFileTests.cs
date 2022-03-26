@@ -12,12 +12,12 @@ namespace Pinky
         [SetUp]
         public void Setup()
         {
-            testFiles.Add(new VideoFileTestingObject(Path.Combine(root, "A.Sample.Series.S07E06.mp4"), "A Sample Series", 7, Path.Combine(root, Manager.SortedDirName, "A Sample Series", "Season 07", "A.Sample.Series.S07E06.mp4")));
-            testFiles.Add(new VideoFileTestingObject(Path.Combine(root, "A.Different.Series.s06e09.WEBRip", "A.Different.Series.s06e09.WEBRip.mkv"), "A Different Series", 6, Path.Combine(root, Manager.SortedDirName, "A Different Series", "Season 06", "A.Different.Series.s06e09.WEBRip.mkv")));
-            testFiles.Add(new VideoFileTestingObject(Path.Combine(root, "A.Different.Series.s06e10.hdtv", "A.Different.Series.s06e10.hdtv.mkv"), "A Different Series", 6, Path.Combine(root, Manager.SortedDirName, "A Different Series", "Season 06", "A.Different.Series.s06e10.hdtv.mkv")));
-            testFiles.Add(new VideoFileTestingObject(Path.Combine(root, "A.Third.Show.S12E0910.WEB.x264", "A.Third.Show.S12E0910.episode-name.WEB.x264.mp4"), "A Third Show", 12, Path.Combine(root, Manager.SortedDirName, "A Third Show", "Season 12", "A.Third.Show.S12E0910.episode-name.WEB.x264.mp4")));
-            testFiles.Add(new VideoFileTestingObject(Path.Combine(root, "a.third.show.s12e11-12.WEB.x264", "a.third.show.s12e11-12.episode-name.WEB.x264.mp4"), "A Third Show", 12, Path.Combine(root, Manager.SortedDirName, "A Third Show", "Season 12", "a.third.show.s12e11-12.episode-name.WEB.x264.mp4")));
-            testFiles.Add(new VideoFileTestingObject(Path.Combine(root, "A.Sample.Series.S07E06-E07.mp4"), "A Sample Series", 7, Path.Combine(root, Manager.SortedDirName, "A Sample Series", "Season 07", "A.Sample.Series.S07E06-E07.mp4")));
+            testFiles.Add(new VideoFileTestingObject(Path.Combine(root, "A.Sample.Series.S07E06.mp4"), "A Sample Series", 7, Path.Combine(root, Manager.config.SortedDirectory, "A Sample Series", "Season 07", "A.Sample.Series.S07E06.mp4")));
+            testFiles.Add(new VideoFileTestingObject(Path.Combine(root, "A.Different.Series.s06e09.WEBRip", "A.Different.Series.s06e09.WEBRip.mkv"), "A Different Series", 6, Path.Combine(root, Manager.config.SortedDirectory, "A Different Series", "Season 06", "A.Different.Series.s06e09.WEBRip.mkv")));
+            testFiles.Add(new VideoFileTestingObject(Path.Combine(root, "A.Different.Series.s06e10.hdtv", "A.Different.Series.s06e10.hdtv.mkv"), "A Different Series", 6, Path.Combine(root, Manager.config.SortedDirectory, "A Different Series", "Season 06", "A.Different.Series.s06e10.hdtv.mkv")));
+            testFiles.Add(new VideoFileTestingObject(Path.Combine(root, "A.Third.Show.S12E0910.WEB.x264", "A.Third.Show.S12E0910.episode-name.WEB.x264.mp4"), "A Third Show", 12, Path.Combine(root, Manager.config.SortedDirectory, "A Third Show", "Season 12", "A.Third.Show.S12E0910.episode-name.WEB.x264.mp4")));
+            testFiles.Add(new VideoFileTestingObject(Path.Combine(root, "a.third.show.s12e11-12.WEB.x264", "a.third.show.s12e11-12.episode-name.WEB.x264.mp4"), "A Third Show", 12, Path.Combine(root, Manager.config.SortedDirectory, "A Third Show", "Season 12", "a.third.show.s12e11-12.episode-name.WEB.x264.mp4")));
+            testFiles.Add(new VideoFileTestingObject(Path.Combine(root, "A.Sample.Series.S07E06-E07.mp4"), "A Sample Series", 7, Path.Combine(root, Manager.config.SortedDirectory, "A Sample Series", "Season 07", "A.Sample.Series.S07E06-E07.mp4")));
         }
 
         [Test]
@@ -54,17 +54,17 @@ namespace Pinky
             config.CustomSeriesNames.Add(new string[] { "My Specialoneword Title", "My Special One-Word Title" });
             config.CustomSeriesNames.Add(new string[] { "Critical Sessions Apostrophe", "Critical Session's Apostrophe" });
 
-            VideoFile toTest = new VideoFile(Path.Combine(root, "my.first.series.s01e01.mp4"));
-            Assert.AreEqual(toTest.GetSeriesName(config.CustomSeriesNames), "My 1st Series");
+            VideoFile toTest = new VideoFile(Path.Combine(root, "my.first.series.s01e01.mp4"), config.CustomSeriesNames);
+            Assert.AreEqual(toTest.GetSeriesName(), "My 1st Series");
 
-            toTest = new VideoFile(Path.Combine(root, "my.second.series.s01e01.mp4"));
-            Assert.AreEqual(toTest.GetSeriesName(config.CustomSeriesNames), "My Second Series");
+            toTest = new VideoFile(Path.Combine(root, "my.second.series.s01e01.mp4"), config.CustomSeriesNames);
+            Assert.AreEqual(toTest.GetSeriesName(), "My Second Series");
 
-            toTest = new VideoFile(Path.Combine(root, "series directory", "my.SPECIALONEWORD.title.s05e0506.mp4"));
-            Assert.AreEqual(toTest.GetSeriesName(config.CustomSeriesNames), "My Special One-Word Title");
+            toTest = new VideoFile(Path.Combine(root, "series directory", "my.SPECIALONEWORD.title.s05e0506.mp4"), config.CustomSeriesNames);
+            Assert.AreEqual(toTest.GetSeriesName(), "My Special One-Word Title");
 
-            toTest = new VideoFile(Path.Combine(root, "critical.sessions.apostrophe.s02e02.avi"));
-            Assert.AreEqual(toTest.GetSeriesName(config.CustomSeriesNames), "Critical Session's Apostrophe");
+            toTest = new VideoFile(Path.Combine(root, "critical.sessions.apostrophe.s02e02.avi"), config.CustomSeriesNames);
+            Assert.AreEqual(toTest.GetSeriesName(), "Critical Session's Apostrophe");
         }
 
         [Test]
