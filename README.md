@@ -38,7 +38,8 @@ Every time you run **MagicEpisodeSort** it also checks if this is the first time
 
 ### To Do:
 
+ - [x] Console menu to edit config - Sorted directory
+ - [ ] Console menu to edit config - TV show titles
  - [ ] Match files with the season/episode format of AxBB
  - [X] Configs for: forcing names of series, folder structure, etc.
- - [ ] Add UI for managing configs
- - [x] Config auto population of series names after every run, for ease of update
+ - [x] Config auto population of series names after every run, for ease of update 

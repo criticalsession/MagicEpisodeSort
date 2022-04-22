@@ -9,11 +9,12 @@ namespace TheBrain
 {
     public static class Manager
     {
-        public static Config config = new Config();
+        public static Config config;
         public static readonly string configName = "MagicEpisodeSort.config";
 
         public static void MagicSort(string root)
         {
+            config = new Config(root);
             ReadConfig(root);
             
             List<VideoFile> files = BuildVideoFiles(root, ReadFiles(root));
@@ -22,11 +23,15 @@ namespace TheBrain
             MoveFiles(root, files);
         }
 
-        private static void ReadConfig(string root)
+        public static void ReadConfig(string root)
         {
             string configPath = Path.Combine(root, configName);
 
-            if (!File.Exists(configPath)) File.WriteAllText(configPath, JsonConvert.SerializeObject(config));
+            if (!File.Exists(configPath))
+            {
+                config = new Config(root);
+                File.WriteAllText(configPath, JsonConvert.SerializeObject(config));
+            }
             else
             {
                 var deserializedConfig = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configPath));
@@ -89,7 +94,7 @@ namespace TheBrain
             return Path.Combine(root, config.SortedDirectory, videoFile.GetSeriesName());
         }
 
-        private static void UpdateConfig(string root, List<VideoFile> files)
+        public static void UpdateConfig(string root, List<VideoFile> files)
         {
             foreach (VideoFile file in files)
             {
@@ -98,6 +103,11 @@ namespace TheBrain
                     config.CustomSeriesNames.Add(new string[] { originalName, originalName });
             }
 
+            UpdateConfig(root);
+        }
+
+        public static void UpdateConfig(string root)
+        {
             File.WriteAllText(Path.Combine(root, configName), JsonConvert.SerializeObject(config));
         }
 

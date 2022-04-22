@@ -13,7 +13,12 @@ namespace TheBrain
 
         public Config()
         {
-            SortedDirectory = "Magic-Sorted";
+
+        }
+
+        public Config(string root)
+        {
+            SortedDirectory = Path.Combine(root, "Magic-Sorted");
             CustomSeriesNames = new List<string[]>();
         }
     }
