@@ -9,15 +9,14 @@ namespace TheBrain
 {
     public static class Manager
     {
-        public static Config config;
+        public static Config config = null;
         public static readonly string configName = "MagicEpisodeSort.config";
 
-        public static void MagicSort(string root)
+        public static void AutoMagicSort(string root)
         {
-            config = new Config(root);
             ReadConfig(root);
             
-            List<VideoFile> files = BuildVideoFiles(root, ReadFiles(root));
+            List<VideoFile> files = BuildVideoFiles(root);
             UpdateConfig(root, files);
 
             MoveFiles(root, files);
@@ -25,6 +24,7 @@ namespace TheBrain
 
         public static void ReadConfig(string root)
         {
+            config = new Config(root);
             string configPath = Path.Combine(root, configName);
 
             if (!File.Exists(configPath))
@@ -41,6 +41,8 @@ namespace TheBrain
 
         public static List<VideoFile> BuildVideoFiles(string root, List<string> filePaths)
         {
+            if (config == null) ReadConfig(root);
+
             List<VideoFile> videoFiles = new List<VideoFile>();
             foreach (string f in filePaths)
             {
@@ -53,6 +55,11 @@ namespace TheBrain
             }
 
             return videoFiles;
+        }
+
+        public static List<VideoFile> BuildVideoFiles(string root)
+        {
+            return BuildVideoFiles(root, ReadFiles(root));
         }
 
         private static List<string> ReadFiles(string directory)
@@ -84,6 +91,24 @@ namespace TheBrain
             }
         }
 
+        public static List<string> GetNewSeriesNames(List<VideoFile> videoFiles)
+        {
+            List<string> seriesNames = new List<string>();
+            foreach (var videoFile in videoFiles)
+            {
+                string originalSeriesName = videoFile.GetOriginalSeriesName();
+                if (!seriesNames.Contains(originalSeriesName))
+                {
+                    if (!config.CustomSeriesNames.Any(p => p[0] == originalSeriesName))
+                    {
+                        seriesNames.Add(originalSeriesName);
+                    }
+                }
+            }
+
+            return seriesNames;
+        }
+
         private static string GetSeriesSeasonDirectory(string root, VideoFile videoFile)
         {
             return Path.Combine(GetSeriesDirectory(root, videoFile), videoFile.SeasonDirectoryName);
@@ -96,12 +121,21 @@ namespace TheBrain
 
         public static void UpdateConfig(string root, List<VideoFile> files)
         {
+            List<string[]> seriesNames = new List<string[]>();
             foreach (VideoFile file in files)
             {
                 string originalName = file.GetOriginalSeriesName();
-                if (!config.CustomSeriesNames.Any(p => p[0] == originalName))
-                    config.CustomSeriesNames.Add(new string[] { originalName, originalName });
+                seriesNames.Add(new string[] { originalName, originalName });
             }
+
+            UpdateConfig(root, seriesNames);
+        }
+
+        public static void UpdateConfig(string root, List<string[]> seriesNames)
+        {
+            foreach (string[] seriesName in seriesNames)
+                if (!config.CustomSeriesNames.Any(p => p[0] == seriesName[0]))
+                    config.CustomSeriesNames.Add(seriesName);
 
             UpdateConfig(root);
         }
@@ -111,7 +145,7 @@ namespace TheBrain
             File.WriteAllText(Path.Combine(root, configName), JsonConvert.SerializeObject(config));
         }
 
-        private static void MoveFiles(string root, List<VideoFile> videoFiles)
+        public static void MoveFiles(string root, List<VideoFile> videoFiles)
         {
             CreateDirectories(root, videoFiles);
 

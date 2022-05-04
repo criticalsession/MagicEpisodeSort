@@ -11,7 +11,7 @@ namespace TheBrain
         public string SortedDirectory { get; set; }
         public List<string[]> CustomSeriesNames { get; set; }
 
-        public Config()
+        public Config ()
         {
 
         }

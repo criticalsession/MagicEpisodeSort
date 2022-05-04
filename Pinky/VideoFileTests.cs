@@ -49,7 +49,7 @@ namespace Pinky
         [Test]
         public void getCustomSeriesName_givenConfig_fromCurrentPath()
         {
-            Config config = new Config();
+            Config config = new Config(root);
             config.CustomSeriesNames.Add(new string[] { "My First Series", "My 1st Series" });
             config.CustomSeriesNames.Add(new string[] { "My Specialoneword Title", "My Special One-Word Title" });
             config.CustomSeriesNames.Add(new string[] { "Critical Sessions Apostrophe", "Critical Session's Apostrophe" });

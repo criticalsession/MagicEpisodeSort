@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using TheBrain;
 
@@ -62,7 +63,34 @@ while (running)
 static void RunMagicSort()
 {
     Console.Clear();
-    Manager.MagicSort(System.AppContext.BaseDirectory);
+    string root = System.AppContext.BaseDirectory;
+
+    Manager.ReadConfig(root);
+    List<VideoFile> videoFiles = Manager.BuildVideoFiles(root);
+
+    List<string[]> adjustedSeriesNames = new List<string[]>();
+    int count = 0;
+    List<string> newSeriesNames = Manager.GetNewSeriesNames(videoFiles);
+
+    foreach (var seriesName in newSeriesNames) 
+    {
+        Console.Clear();
+
+        Console.WriteLine("New Series Name Found (" + ++count + " of " + newSeriesNames.Count + ")");
+
+        Console.Write("Enter custom name for \"" + seriesName + "\" (press 'Enter' to keep as is): ");
+        string customName = Console.ReadLine().Trim();
+
+        string[] newSeriesName = new string[] { seriesName, String.IsNullOrEmpty(customName) ? seriesName : customName };
+        adjustedSeriesNames.Add(newSeriesName);
+    }
+
+    Console.Clear();
+
+    Manager.UpdateConfig(root, adjustedSeriesNames);
+    videoFiles = Manager.BuildVideoFiles(root);
+    Manager.MoveFiles(root, videoFiles);
+
     Console.WriteLine("Sorting done.");
     Console.ReadLine();
 }
